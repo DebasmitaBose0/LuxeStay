@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/components/auth/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,6 +27,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 export default function RegisterPage() {
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [error, setError] = useState<string | null>(null);
   
   const { register, handleSubmit, control, formState: { errors, isSubmitting } } = useForm<RegisterFormValues>({
@@ -37,7 +38,8 @@ export default function RegisterPage() {
     try {
       setError(null);
       await registerUser(data.name, data.email, data.gender);
-      navigate('/');
+      const returnTo = (location.state as any)?.from?.pathname || '/';
+      navigate(returnTo, { replace: true });
     } catch (err) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       setError('Failed to create account. Please try again.');
@@ -140,7 +142,7 @@ export default function RegisterPage() {
         <CardFooter className="flex justify-center border-t p-6">
           <p className="text-sm text-muted-foreground">
             Already have an account?{' '}
-            <Link to="/login" className="font-medium text-primary hover:underline">
+            <Link to="/login" state={{ from: (location.state as any)?.from }} className="font-medium text-primary hover:underline">
               Sign in
             </Link>
           </p>

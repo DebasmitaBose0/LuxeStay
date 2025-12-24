@@ -30,22 +30,8 @@ function App() {
             <Route path="about" element={<AboutUsPage />} />
             <Route path="careers" element={<CareersPage />} />
             <Route path="press" element={<PressPage />} />
-            <Route 
-              path="hotels" 
-              element={
-                <ProtectedRoute>
-                  <RoomListingPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="rooms/:id" 
-              element={
-                <ProtectedRoute>
-                  <RoomDetailsPage />
-                </ProtectedRoute>
-              } 
-            />
+            <Route path="hotels" element={<RoomListingPage />} />
+            <Route path="rooms/:id" element={<RoomDetailsPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route 

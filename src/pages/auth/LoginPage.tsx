@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/components/auth/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,6 +20,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [error, setError] = useState<string | null>(null);
   
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormValues>({
@@ -30,7 +31,8 @@ export default function LoginPage() {
     try {
       setError(null);
       await login(data.email);
-      navigate('/');
+      const returnTo = (location.state as any)?.from?.pathname || '/';
+      navigate(returnTo, { replace: true });
     } catch (err) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       setError('Failed to login. Please try again.');
@@ -100,7 +102,7 @@ export default function LoginPage() {
         <CardFooter className="flex justify-center border-t p-6">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{' '}
-            <Link to="/register" className="font-medium text-primary hover:underline">
+            <Link to="/register" state={{ from: (location.state as any)?.from }} className="font-medium text-primary hover:underline">
               Sign up
             </Link>
           </p>

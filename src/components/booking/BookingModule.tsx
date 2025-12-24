@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/components/auth/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
   Dialog,
@@ -28,6 +28,7 @@ interface BookingModuleProps {
 export default function BookingModule({ room, bookedDates, onBook }: BookingModuleProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [date, setDate] = useState<DateRange | undefined>();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -53,7 +54,7 @@ export default function BookingModule({ room, bookedDates, onBook }: BookingModu
   const handleBookClick = () => {
     if (!user) {
       toast.error('Please log in to book a room');
-      navigate('/login');
+      navigate('/login', { state: { from: location }, replace: true });
       return;
     }
     if (!date?.from || !date?.to) return;

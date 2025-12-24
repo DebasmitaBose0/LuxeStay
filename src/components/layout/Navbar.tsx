@@ -103,10 +103,10 @@ export default function Navbar(): JSX.Element {
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-300 border-b text-slate-900 dark:text-white ${
-        mode === 'transparent' 
-          ? 'bg-transparent border-transparent' 
-          : 'bg-white dark:bg-slate-950 border-gray-200 dark:border-slate-800 shadow-sm'
+      className={`sticky top-0 z-50 transition-all duration-300 border-b backdrop-blur-md text-[#2C2416] dark:text-[#FFFBF5] ${
+        mode === 'transparent'
+          ? 'bg-white/25 dark:bg-[#1A1F3A]/20 border-transparent'
+          : 'bg-white/75 dark:bg-[#1A1F3A]/80 border-[#D4A574]/30 dark:border-[#D4A574]/20 shadow-sm'
       }`}
     >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -119,7 +119,7 @@ export default function Navbar(): JSX.Element {
           <Link
             to="/hotels"
             {...hotelsHandlers}
-            className="hidden md:inline-block text-sm font-bold transition-all duration-300 px-3 py-1.5 rounded-lg text-slate-900 dark:text-white hover:bg-gradient-to-r hover:from-orange-100 hover:to-green-100 dark:hover:from-orange-900/40 dark:hover:to-green-900/40 hover:text-slate-900 dark:hover:text-white hover:shadow-[0_0_20px_rgba(249,115,22,0.3),0_0_20px_rgba(34,197,94,0.3)]"
+            className="hidden md:inline-flex items-center text-sm font-semibold transition-colors px-3 py-2 rounded-lg text-[#2C2416] dark:text-[#FFFBF5] hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 hover:text-[#8B3A3A] dark:hover:text-[#D4A574]"
           >
             Hotels
           </Link>
@@ -129,22 +129,22 @@ export default function Navbar(): JSX.Element {
         <div className="flex items-center gap-2 md:gap-3">
 
           {/* Mini cart / live booking summary */}
-          <div className="hidden md:flex items-center gap-2 border rounded-lg px-3 py-1.5 transition-all duration-300 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 hover:bg-gradient-to-r hover:from-orange-100 hover:to-green-100 dark:hover:from-orange-900/40 dark:hover:to-green-900/40 hover:border-orange-400 dark:hover:border-orange-500 hover:shadow-[0_0_20px_rgba(249,115,22,0.3),0_0_20px_rgba(34,197,94,0.3)]">
+          <div className="hidden md:flex items-center gap-2 border rounded-lg px-3 py-1.5 transition-colors bg-white/60 dark:bg-[#2C2416]/50 backdrop-blur-md border-[#D4A574]/30 dark:border-[#D4A574]/20 hover:bg-white/75 dark:hover:bg-[#2C2416]/60 hover:border-[#D4A574]/50 dark:hover:border-[#D4A574]/35">
             {draft ? (
               <>
-                <div className="text-xs font-semibold text-slate-700 dark:text-slate-300">{draft.nights} nights</div>
-                <div className="font-bold text-slate-900 dark:text-white">₹{draft.total.toFixed(0)}</div>
+                <div className="text-xs font-semibold text-[#5C5550] dark:text-slate-300">{draft.nights} nights</div>
+                <div className="font-bold text-[#2C2416] dark:text-[#FFFBF5]">₹{draft.total.toFixed(0)}</div>
                 {draft.policy && (
-                  <div className="ml-2 text-[10px] px-2 py-1 rounded text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 font-semibold">
+                  <div className="ml-2 text-[10px] px-2 py-1 rounded text-xs bg-[#D4A574]/20 dark:bg-[#D4A574]/15 text-[#8B3A3A] dark:text-[#D4A574] font-semibold">
                     {draft.policy}
                   </div>
                 )}
-                <Link to="/booking/draft" className="ml-2 text-sm font-semibold underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
+                <Link to="/booking/draft" className="ml-2 text-sm font-semibold underline text-[#8B3A3A] dark:text-[#D4A574] hover:opacity-90">
                   Resume
                 </Link>
               </>
             ) : (
-              <Link to="/hotels" className="text-sm font-semibold text-slate-900 dark:text-white hover:text-orange-700 dark:hover:text-orange-300">
+              <Link to="/hotels" className="text-sm font-semibold text-[#2C2416] dark:text-[#FFFBF5] hover:text-[#8B3A3A] dark:hover:text-[#D4A574]">
                 Start booking
               </Link>
             )}
@@ -153,7 +153,7 @@ export default function Navbar(): JSX.Element {
           {/* My Bookings with prefetch */}
           <Link to="/dashboard" {...bookingsHandlers} className="hidden md:inline-block">
             <Button 
-              className="gap-2 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-semibold border border-slate-300 dark:border-slate-700 transition-all duration-300 hover:bg-gradient-to-r hover:from-orange-100 hover:to-green-100 dark:hover:from-orange-900/40 dark:hover:to-green-900/40 hover:border-orange-400 dark:hover:border-orange-500 hover:text-slate-900 dark:hover:text-white hover:shadow-[0_0_20px_rgba(249,115,22,0.3),0_0_20px_rgba(34,197,94,0.3)]"
+              className="gap-2 bg-white/60 dark:bg-[#2C2416]/50 backdrop-blur-md text-[#2C2416] dark:text-[#FFFBF5] font-semibold border border-[#D4A574]/30 dark:border-[#D4A574]/20 transition-colors hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 hover:border-[#D4A574]/50 dark:hover:border-[#D4A574]/35"
             >
               <Calendar className="w-4 h-4" />
               <span className="hidden sm:inline">My Bookings</span>
@@ -166,7 +166,7 @@ export default function Navbar(): JSX.Element {
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="ghost" 
-                  className="h-9 w-9 transition-all duration-300 text-slate-900 dark:text-white hover:bg-gradient-to-r hover:from-orange-100 hover:to-green-100 dark:hover:from-orange-900/40 dark:hover:to-green-900/40 hover:shadow-[0_0_20px_rgba(249,115,22,0.3),0_0_20px_rgba(34,197,94,0.3)] rounded-lg" 
+                  className="h-9 w-9 transition-colors text-[#2C2416] dark:text-[#FFFBF5] hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 rounded-lg" 
                   title="Toggle theme"
                 >
                   {resolvedTheme === 'dark' ? (
@@ -178,25 +178,25 @@ export default function Navbar(): JSX.Element {
               </DropdownMenuTrigger>
               <DropdownMenuContent 
                 align="end"
-                className="bg-white dark:bg-slate-950 border-gray-200 dark:border-slate-800"
+                className="bg-white/95 dark:bg-[#1A1F3A]/95 border-[#D4A574]/30 dark:border-[#D4A574]/20 backdrop-blur-md"
               >
                 <DropdownMenuItem 
                   onClick={() => setTheme('light')}
-                  className="text-slate-900 dark:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="text-[#2C2416] dark:text-[#FFFBF5] hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 cursor-pointer"
                 >
                   <Sun className="mr-2 h-4 w-4" />
                   <span>Light</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem 
                   onClick={() => setTheme('dark')}
-                  className="text-slate-900 dark:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="text-[#2C2416] dark:text-[#FFFBF5] hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 cursor-pointer"
                 >
                   <Moon className="mr-2 h-4 w-4" />
                   <span>Dark</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem 
                   onClick={() => setTheme('system')}
-                  className="text-slate-900 dark:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="text-[#2C2416] dark:text-[#FFFBF5] hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 cursor-pointer"
                 >
                   <SunMoon className="mr-2 h-4 w-4" />
                   <span>System</span>
@@ -209,13 +209,13 @@ export default function Navbar(): JSX.Element {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    className="relative h-9 w-9 rounded-full transition-all duration-300 text-slate-900 dark:text-white hover:bg-gradient-to-r hover:from-orange-100 hover:to-green-100 dark:hover:from-orange-900/40 dark:hover:to-green-900/40 hover:shadow-[0_0_20px_rgba(249,115,22,0.3),0_0_20px_rgba(34,197,94,0.3)] text-xl flex items-center justify-center"
+                    className="relative h-9 w-9 rounded-full transition-colors text-[#2C2416] dark:text-[#FFFBF5] hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 text-xl flex items-center justify-center"
                   >
                     {getGenderEmoji(user.gender)}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent 
-                  className="w-56 bg-white dark:bg-slate-950 border-gray-200 dark:border-slate-800" 
+                  className="w-56 bg-white/95 dark:bg-[#1A1F3A]/95 border-[#D4A574]/30 dark:border-[#D4A574]/20 backdrop-blur-md" 
                   align="end" 
                   forceMount
                 >
@@ -227,14 +227,14 @@ export default function Navbar(): JSX.Element {
                   </div>
                   <DropdownMenuItem 
                     onClick={() => navigate('/dashboard')}
-                    className="text-slate-900 dark:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer"
+                    className="text-[#2C2416] dark:text-[#FFFBF5] hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 cursor-pointer"
                   >
                     <Calendar className="mr-2 h-4 w-4" />
                     <span>My Bookings</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     onClick={handleLogout} 
-                    className="text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-800 cursor-pointer"
+                    className="text-red-600 dark:text-red-400 hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 cursor-pointer"
                   >
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
@@ -245,14 +245,14 @@ export default function Navbar(): JSX.Element {
               <>
                 <Link to="/login">
                   <Button 
-                    className="text-slate-900 dark:text-white bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 font-semibold transition-all duration-300 hover:bg-gradient-to-r hover:from-orange-100 hover:to-green-100 dark:hover:from-orange-900/40 dark:hover:to-green-900/40 hover:border-orange-400 dark:hover:border-orange-500 hover:text-slate-900 dark:hover:text-white hover:shadow-[0_0_20px_rgba(249,115,22,0.3),0_0_20px_rgba(34,197,94,0.3)]"
+                    className="text-[#2C2416] dark:text-[#FFFBF5] bg-white/60 dark:bg-[#2C2416]/50 backdrop-blur-md border border-[#D4A574]/30 dark:border-[#D4A574]/20 font-semibold transition-colors hover:bg-[#D4A574]/15 dark:hover:bg-[#D4A574]/10 hover:border-[#D4A574]/50 dark:hover:border-[#D4A574]/35"
                   >
                     Log in
                   </Button>
                 </Link>
                 <Link to="/register">
                   <Button 
-                    className="bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-bold transition-all duration-300 hover:shadow-[0_0_25px_rgba(249,115,22,0.5)] border border-orange-600"
+                    className="bg-[#8B3A3A] dark:bg-[#D4A574] hover:bg-[#A24A4A] dark:hover:bg-[#E0B587] text-white dark:text-[#1A1F3A] font-bold transition-colors border border-transparent"
                   >
                     Register
                   </Button>

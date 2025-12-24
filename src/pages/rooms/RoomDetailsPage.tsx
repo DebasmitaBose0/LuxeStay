@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { api } from '@/lib/api';
 import { Room } from '@/lib/types';
 import BookingModule from '@/components/booking/BookingModule';
@@ -13,6 +13,7 @@ import { useAuth } from '@/components/auth/AuthContext';
 export default function RoomDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   
   const [room, setRoom] = useState<Room | null>(null);
@@ -44,7 +45,19 @@ export default function RoomDetailsPage() {
   }, [id, navigate]);
 
   const handleBook = async (checkIn: Date, checkOut: Date, totalPrice: number) => {
-    if (!room || !user || !id) return;
+    if (!room || !id) return;
+
+    if (!user) {
+      sessionStorage.setItem('bookingDraft', JSON.stringify({
+        roomId: room.id,
+        checkIn: checkIn.toISOString(),
+        checkOut: checkOut.toISOString(),
+        totalPrice,
+      }));
+      toast.error('Please log in to complete your booking');
+      navigate('/login', { state: { from: location }, replace: true });
+      return;
+    }
 
     try {
       await api.createBooking({
